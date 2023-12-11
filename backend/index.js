@@ -7,8 +7,6 @@ const { config } = require('dotenv');
 
 const PORT = process.env.PORT || 5000;
 
-// pass : 6hArR95fY5xVSI7n / CU5YvJWf7M2tOgZH
-
 // Middleware
 app.use(bodyParser.json());
 app.use(cors());
