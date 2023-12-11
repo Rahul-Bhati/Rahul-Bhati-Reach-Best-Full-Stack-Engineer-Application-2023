@@ -3,10 +3,9 @@ import { Data } from '../data'
 import ProductCard from './ProductCard'
 
 const Product = () => {
-  // const [page, setPage] = useState("");
   const [genre, setGenre] = useState("");
   const [year, setYear] = useState("");
-  const [filter, setFiltered] = useState("");
+  const [filter, setFiltered] = useState(Data);
 
   const handleGenre = (event) => {
     const value = event.target.value;
@@ -17,9 +16,10 @@ const Product = () => {
       });
     } else {
       filtered = Data.filter(item => {
-        return item.category.includes(value) || item.year === year;
+        return item.category.includes(value) && item.year === Number(year);
       });
     }
+    setGenre(value);
     setFiltered(filtered);
   }
   const handleYear = (event) => {
@@ -27,17 +27,18 @@ const Product = () => {
     let filtered;
     if (genre == "") {
       filtered = Data.filter(item => {
-        return item.year===value ;
+        return item.year === Number(value);
       });
     } else {
       filtered = Data.filter(item => {
-        return item.category.includes(genre) || item.year === value;
+        return item.year === Number(value) && item.category.includes(genre);
       });
     }
+    setYear(value);
     setFiltered(filtered);
   }
 
-  console.log(genre + "  " + year + " " + filter);
+  console.log(genre + "  " + year);
   return (
     <>
       <div className="container-fluid product" style={{ marginTop: "80px", width: "80%" }}>
@@ -97,13 +98,9 @@ const Product = () => {
         </div>
 
         <div className="row" id="products">
-          {Data.map((item) => (
-            // console.log(item)
+          {filter.map((item) => (
             (<ProductCard product={item} />)
           ))}
-          {Data.filter((item) => {
-            return item.category === genre
-          })}
         </div>
       </div>
     </>
